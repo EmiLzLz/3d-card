@@ -1,44 +1,44 @@
 # 3D Interactive Card
 
-Tarjeta 3D que reacciona al movimiento del mouse. Primer proyecto standalone de WebGL/Three.js, enfocado en aprender los fundamentos de React Three Fiber.
+A 3D card that reacts to mouse movement. First standalone WebGL/Three.js project, focused on learning the fundamentals of React Three Fiber.
 
-## ¿Qué hace?
+## What it does
 
-- La tarjeta rota suavemente siguiendo al mouse, pero solo cuando el cursor está encima de ella
-- Al salir, vuelve a su posición original con la misma suavidad
-- Iluminación tipo foco desde arriba con sombra sobre el plano
-- Material físico con efecto de plástico premium (clearcoat)
-- Textura personalizada aplicada como imagen
+- The card rotates smoothly following the mouse, but only when the cursor is hovering over it
+- When the cursor leaves, it returns to its original position with the same smoothness
+- Spotlight-style lighting from above casting a shadow on the plane below
+- Physical material with a premium plastic finish (clearcoat)
+- Custom texture applied as an image
 
 ## Stack
 
 - [React Three Fiber](https://docs.pmnd.rs/react-three-fiber) — React + WebGL
-- [@react-three/drei](https://drei.pmnd.rs/) — helpers y abstracciones
-- [Three.js](https://threejs.org/) — base matemática y de renderizado
+- [@react-three/drei](https://drei.pmnd.rs/) — helpers and abstractions
+- [Three.js](https://threejs.org/) — math and rendering foundation
 - Vite + React + TypeScript
 
-## Lo que aprendí construyendo esto
+## What I learned building this
 
-- `useFrame` con delta para animaciones frame-rate independent
-- Quaternions y `slerp` para interpolar rotaciones sin gimbal lock
-- `useRef` para mutar objetos 3D sin provocar re-renders
-- Garbage collection — evitar `new THREE.X()` dentro del loop de animación
-- Raycasting con `onPointerEnter` / `onPointerLeave` en el mesh
-- `meshPhysicalMaterial` y sus propiedades (roughness, clearcoat, ior)
-- `useTexture` de Drei para aplicar imágenes como textura
-- Iluminación con `pointLight` y sombras en el Canvas
+- `useFrame` with delta for frame-rate independent animations
+- Quaternions and `slerp` to interpolate rotations without gimbal lock
+- `useRef` to mutate 3D objects without triggering re-renders
+- Garbage collection — avoiding `new THREE.X()` inside the animation loop
+- Raycasting with `onPointerEnter` / `onPointerLeave` on the mesh
+- `meshPhysicalMaterial` and its properties (roughness, clearcoat, ior)
+- `useTexture` from Drei to apply images as textures
+- Lighting with `pointLight` and shadows in the Canvas
 
-## Estructura
+## Structure
 
 ```
 src/
 ├── components/
-│   ├── Card.tsx      # mesh principal, lógica de rotación y raycasting
-│   └── Plane.tsx     # plano que recibe la sombra
-└── App.tsx           # Canvas, cámara, luces
+│   ├── Card.tsx      # main mesh, rotation logic and raycasting
+│   └── Plane.tsx     # plane that receives the shadow
+└── App.tsx           # Canvas, camera, lights
 ```
 
-## Correr localmente
+## Run locally
 
 ```bash
 npm install
