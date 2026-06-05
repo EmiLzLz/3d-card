@@ -1,54 +1,46 @@
-# React + TypeScript + Vite
+# 3D Interactive Card
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tarjeta 3D que reacciona al movimiento del mouse. Primer proyecto standalone de WebGL/Three.js, enfocado en aprender los fundamentos de React Three Fiber.
 
-Currently, two official plugins are available:
+## ¿Qué hace?
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- La tarjeta rota suavemente siguiendo al mouse, pero solo cuando el cursor está encima de ella
+- Al salir, vuelve a su posición original con la misma suavidad
+- Iluminación tipo foco desde arriba con sombra sobre el plano
+- Material físico con efecto de plástico premium (clearcoat)
+- Textura personalizada aplicada como imagen
 
-## Expanding the ESLint configuration
+## Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [React Three Fiber](https://docs.pmnd.rs/react-three-fiber) — React + WebGL
+- [@react-three/drei](https://drei.pmnd.rs/) — helpers y abstracciones
+- [Three.js](https://threejs.org/) — base matemática y de renderizado
+- Vite + React + TypeScript
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Lo que aprendí construyendo esto
+
+- `useFrame` con delta para animaciones frame-rate independent
+- Quaternions y `slerp` para interpolar rotaciones sin gimbal lock
+- `useRef` para mutar objetos 3D sin provocar re-renders
+- Garbage collection — evitar `new THREE.X()` dentro del loop de animación
+- Raycasting con `onPointerEnter` / `onPointerLeave` en el mesh
+- `meshPhysicalMaterial` y sus propiedades (roughness, clearcoat, ior)
+- `useTexture` de Drei para aplicar imágenes como textura
+- Iluminación con `pointLight` y sombras en el Canvas
+
+## Estructura
+
+```
+src/
+├── components/
+│   ├── Card.tsx      # mesh principal, lógica de rotación y raycasting
+│   └── Plane.tsx     # plano que recibe la sombra
+└── App.tsx           # Canvas, cámara, luces
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Correr localmente
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm install
+npm run dev
 ```
